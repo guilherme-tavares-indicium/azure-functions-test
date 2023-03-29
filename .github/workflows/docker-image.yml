@@ -30,6 +30,6 @@ jobs:
         registry-username: ${{ secrets.ACR_USERNAME }}
         registry-password: ${{ secrets.ACR_PASSWORD }}
         location: 'east us'
-        os-type: linux
+        os-type: Linux
         resource-group: hyland-poc
         name: poctest
