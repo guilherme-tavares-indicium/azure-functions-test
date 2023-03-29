@@ -1,0 +1,30 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push to ACR
+      uses: azure/docker-login@v1
+      with:
+        login-server: hylandpocimageregistry.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    - run: |
+        docker build . -t hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
+        docker push hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
+    - name: Deploy to ACI
+      uses: azure/aci-deploy@v1
+      with:
+        azure-container-registry: hylandpocimageregistry.azurecr.io
+        image: hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
+        dns-name-label: poctest.eastus.azurecontainer.io
+        os-type: linux
+        resource-group: hyland-poc
+        subscription: Indicium Azure Tests
+        name: poctest

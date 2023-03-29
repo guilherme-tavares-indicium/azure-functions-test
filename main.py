@@ -1,14 +1,12 @@
 # Load libraries
 from azure.storage.blob import BlobClient
 import pandas as pd
-from dotenv import dotenv_values
-
-config = dotenv_values(".env")
+import os
 
 # Define parameters
-connectionString = config["CONNECTION_STRING"]
+connectionString = os.environ.get("CONNECTION_STRING")
 containerName = "output"
-outputBlobName	= "iris_setosa.csv"
+outputBlobName	= "iris_setosa_v2.csv"
 
 # Establish connection with the blob storage account
 blob = BlobClient.from_connection_string(conn_str=connectionString, container_name=containerName, blob_name=outputBlobName)
