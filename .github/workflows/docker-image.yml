@@ -25,6 +25,7 @@ jobs:
     - name: Deploy to ACI
       uses: azure/aci-deploy@v1
       with:
+        dns-name-label: poctest.eastus.azurecontainer.io
         image: hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
         registry-username: ${{ secrets.ACR_USERNAME }}
         registry-password: ${{ secrets.ACR_PASSWORD }}
