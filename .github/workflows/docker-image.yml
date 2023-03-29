@@ -18,6 +18,10 @@ jobs:
     - run: |
         docker build . -t hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
         docker push hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Deploy to ACI
       uses: azure/aci-deploy@v1
       with:
@@ -26,5 +30,4 @@ jobs:
         dns-name-label: poctest.eastus.azurecontainer.io
         os-type: linux
         resource-group: hyland-poc
-        subscription: Indicium Azure Tests
         name: poctest
