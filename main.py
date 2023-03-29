@@ -2,11 +2,14 @@
 from azure.storage.blob import BlobClient
 import pandas as pd
 import os
+from datetime import datetime
+
 
 # Define parameters
+now = datetime.now() # current date and time
 connectionString = os.environ.get("CONNECTION_STRING")
 containerName = "output"
-outputBlobName	= "iris_setosa_v2.csv"
+outputBlobName	= f"iris_setosa_v2_{now}.csv"
 
 # Establish connection with the blob storage account
 blob = BlobClient.from_connection_string(conn_str=connectionString, container_name=containerName, blob_name=outputBlobName)
