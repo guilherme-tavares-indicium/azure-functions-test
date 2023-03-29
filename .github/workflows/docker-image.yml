@@ -33,3 +33,5 @@ jobs:
         os-type: Linux
         resource-group: hyland-poc
         name: poctest
+        environment-variables: |
+          CONNECTION_STRING=${{ secrets.BLOB_CONNECTION_STRING }}
