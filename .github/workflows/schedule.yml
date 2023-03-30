@@ -11,8 +11,7 @@ jobs:
       - name: Authenticate
         run: |
           # Perform authentication and retrieve access token
-          response=$(curl -X POST https://login.microsoftonline.com/${{ secrets.TENANTID }}/oauth2/token \
--H 'Content-Type: application/x-www-form-urlencoded' \
+          response=$(curl -X POST https://login.microsoftonline.com/${{ secrets.TENANTID }}/oauth2/token -H 'Content-Type: application/x-www-form-urlencoded' \
 -d 'grant_type=client_credentials&client_id=${{ secrets.CLIENTID }}&client_secret=${{ secrets.CLIENTSECRET }}&resource=https://management.azure.com/')
           access_token=$(echo $response | jq -r '.access_token')
           echo "::set-output name=access_token::$access_token"
@@ -26,4 +25,6 @@ jobs:
           ACCESS_TOKEN: ${{ needs.authenticate.outputs.access_token }}
         run: |
           curl -X POST https://management.azure.com/subscriptions/{{ secrets.SUBSCRIPTIONID }}/resourceGroups/hyland-poc/providers/Microsoft.ContainerInstance/containerGroups/poctest/start?api-version=2021-03-01 \
-            -H "Authorization: Bearer $ACCESS_TOKEN"
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"properties":{"provisioningState":"Succeeded"}}'
