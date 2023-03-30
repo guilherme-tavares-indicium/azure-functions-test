@@ -12,7 +12,7 @@ jobs:
         run: |
           # Perform authentication and retrieve access token
           response=$(curl -X POST "https://login.microsoftonline.com/${{ secrets.TENANTID }}/oauth2/token" -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client_credentials&client_id=${{ secrets.CLIENTID }}&client_secret=${{ secrets.CLIENTSECRET }}&resource=https://management.azure.com/")
-          access_token=$(echo $response | jq -r '.access_token')
+          access_token=$(echo $response | grep -oP '(?<="access_token":")[^"]*' | sed 's/\\\\\//\//g')
           echo "::set-output name=access_token::$access_token"
   
   send-request:
