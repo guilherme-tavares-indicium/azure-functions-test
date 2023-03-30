@@ -23,5 +23,5 @@ df = df[df['Species'] == "setosa"]
 # Save the subset of the iris dataframe locally in task node
 df.to_csv(outputBlobName, index = False)
 
-with open(outputBlobName, "rb") as data:
+with open('dummy'+outputBlobName, "rb") as data:
     blob.upload_blob(data, overwrite=True)
