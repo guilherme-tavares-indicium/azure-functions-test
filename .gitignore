@@ -2,3 +2,4 @@ venv
 .env
 .mypy_cache
 azureauth.json
+iris_setosa_*
