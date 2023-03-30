@@ -4,7 +4,6 @@ import pandas as pd
 import os
 from datetime import datetime
 
-
 # Define parameters
 now = datetime.now() # current date and time
 connectionString = os.environ.get("CONNECTION_STRING")

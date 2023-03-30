@@ -23,7 +23,4 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ needs.authenticate.outputs.access_token }}
         run: |
-          curl -X POST "https://management.azure.com/subscriptions/${{ secrets.SUBSCRIPTIONID }}/resourceGroups/hyland-poc/providers/Microsoft.ContainerInstance/containerGroups/poctest/start?api-version=2021-03-01" \
-            -H "Authorization: Bearer $ACCESS_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d '{"properties":{"provisioningState":"Succeeded"}}'
+          curl -X POST "https://management.azure.com/subscriptions/${{ secrets.SUBSCRIPTIONID }}/resourceGroups/hyland-poc/providers/Microsoft.ContainerInstance/containerGroups/poctest/start?api-version=2021-03-01" -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "Content-Type: application/json" -d '{"properties":{"provisioningState":"Succeeded"}}'
