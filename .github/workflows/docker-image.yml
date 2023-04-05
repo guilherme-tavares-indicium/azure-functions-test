@@ -24,10 +24,9 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - run: |
         az container create \
-        --registry-username-secret ${{ secrets.ACR_USERNAME }} \
-        --registry-password-secret ${{ secrets.ACR_PASSWORD }} \
+        --registry-username ${{ secrets.ACR_USERNAME }} \
+        --registry-password ${{ secrets.ACR_PASSWORD }} \
         --resource-group hyland-poc \
         --name poctest \
         --image hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }} \
         --restart-policy Never \
-        --container-name poctest_new
