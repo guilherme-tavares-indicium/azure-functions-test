@@ -23,15 +23,13 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Deploy to ACI
-      uses: azure/aci-deploy@v1
+      uses: azure/container-instances-action@v1
       with:
-        dns-name-label: poctest2-label
         image: hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
         registry-username: ${{ secrets.ACR_USERNAME }}
         registry-password: ${{ secrets.ACR_PASSWORD }}
-        location: 'east us'
-        os-type: Linux
         resource-group: hyland-poc
-        name: poctest2
+        name: poctest
+        container-name: poctest_2
         secure-environment-variables: CONNECTION_STRING=${{ secrets.BLOB_CONNECTION_STRING }}
         restart-policy: Never
