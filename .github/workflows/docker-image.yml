@@ -18,18 +18,16 @@ jobs:
     - run: |
         docker build . -t hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
         docker push hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
-    - name: Azure Login
+    - name: Deploy to ACI
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - name: Deploy to ACI
-      uses: azure/container-instances-action@v1
-      with:
-        image: hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }}
-        registry-username: ${{ secrets.ACR_USERNAME }}
-        registry-password: ${{ secrets.ACR_PASSWORD }}
-        resource-group: hyland-poc
-        name: poctest
-        container-name: poctest_2
-        secure-environment-variables: CONNECTION_STRING=${{ secrets.BLOB_CONNECTION_STRING }}
-        restart-policy: Never
+    - run: |
+        az container create \
+        --registry-username-secret ${{ secrets.ACR_USERNAME }} \
+        --registry-password-secret ${{ secrets.ACR_PASSWORD }} \
+        --resource-group hyland-poc \
+        --name poctest \
+        --image hylandpocimageregistry.azurecr.io/poctest:${{ github.sha }} \
+        --restart-policy Never \
+        --container-name poctest_new
