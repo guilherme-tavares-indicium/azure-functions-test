@@ -14,7 +14,7 @@ outputBlobName	= f"iris_setosa_v4_{now}.csv"
 blob = BlobClient.from_connection_string(conn_str=connectionString, container_name=containerName, blob_name=outputBlobName)
 
 # Load iris dataset
-df = pd.read_csv("iris.csv")
+df = pd.read_csv("iriss.csv")
 
 # Take a subset of the records
 df = df[df['Species'] == "setosa"]
