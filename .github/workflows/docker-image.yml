@@ -35,3 +35,4 @@ jobs:
         name: poctest
         secure-environment-variables: CONNECTION_STRING=${{ secrets.BLOB_CONNECTION_STRING }}
         restart-policy: Never
+        tags: 'frequency=daily'
